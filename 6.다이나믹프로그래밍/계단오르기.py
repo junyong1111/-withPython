@@ -1,3 +1,4 @@
+# https://jypark1111.tistory.com/195
 import sys
 # sys.stdin = open("6.다이나믹프로그래밍/input.txt")
 
@@ -24,3 +25,4 @@ else:
         dp[2][i] = max(dp[0][i-1], dp[1][i-1])
     
     print(max(dp[0][n], dp[1][n])) #-- 마지막은 밟아야 하므로 안 밟은 경우는 제외
+    
