@@ -99,6 +99,14 @@ RGB 거리(추천)
 
 포도주 시식
 - 난이도 실버 1
-- 풀이 시간 : 
+- 풀이 시간 : 10분
 - 시간 제한 : 2초
 - 메모리 제한 : 128MB
+- https://www.youtube.com/watch?v=jhakONbIrOk
+
+쉬운 계단 수
+- 난이도 실버 1
+- 풀이 시간 : 30분
+- 시간 제한 : 1초
+- 메모리 제한 : 256MB
+- https://www.youtube.com/watch?v=SPVOKqMDerQ
