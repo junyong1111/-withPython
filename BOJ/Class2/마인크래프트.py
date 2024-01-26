@@ -1,5 +1,4 @@
 import sys
-sys.stdin = open("BOJ/Class2/input.txt")
 
 def myPrint(arr, n, m):
     for i in range(n):
