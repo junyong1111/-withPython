@@ -23,7 +23,7 @@ while stack:
         if virus[data] == False:
             virus[data] = True
             stack.append(data)
-cnt = -1
+cnt = -1 #-- 1번 컴은 제외
 for data in virus:
     if data == True:
         cnt+=1
