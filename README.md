@@ -1,5 +1,5 @@
 # 이것이 취업을 위한 코딩 테스트다 with 파이썬
-2024-03-12
+
 그래프 시각화 사이트 : https://csacademy.com/app/graph_editor/
 
 10^8 = 1초
