@@ -116,51 +116,40 @@ answerList = []
 # for move in range(possibleMove[cctv]):
 #     print(detectTwoCCTV(x, y, move))
     
-def backtracking(level, index, detect, oldOffice):
-    newOffice = copy.deepcopy(oldOffice)
-    #-- 만약에 현재 들어온 Index가 존재하는 CCTV보다 많은 경우에는 제외
-    if index >= len(CCTV):
+def backtracking(index, office):
+    global answer
+    
+    if index == len(CCTV):
+        count = 0
+        for i in range(N):
+            for j in range(M):
+                if office[i][j] == 0:
+                    count += 1
+        answer = min(answer, count)
         return
     
-    #-- step1. 현재 CCTV가 이동가능 한 횟수만큼 이동
     x, y, cctvNumber = CCTV[index]
     
     for move in range(possibleMove[cctvNumber]):
-        #1번 CCTV 4방향 이동 가능
-        if cctvNumber  == 1:
-            ndetect = detect + detectOneCCTV(x, y, move, newOffice)
-        #2번 CCTV 2방향 이동 가능
-        elif cctvNumber == 2:
-            ndetect = detect + detectTwoCCTV(x, y, move, newOffice)
-        #3번 CCTV 4방향 이동 가능
-        elif cctvNumber == 3:
-            ndetect = detect + detectThreeCCTV(x, y, move, newOffice)
-        #4번 CCTV 4방향    
-        elif cctvNumber == 4:
-            ndetect = detect + detectFourCCTV(x, y, move, newOffice)
-        #5번 CCTV 이동 불가    
-        elif cctvNumber == 5:
-            ndetect = detect + detectFiveCCTV(x, y, move, newOffice)
+        newOffice = copy.deepcopy(office)
         
-        if index+1 == level:
-            answerList.append(ndetect)
-        #-- step3. 또 다른 CCTV 확인
-        for i in range(index+1, len(CCTV)):
-            if visit[i] == False:
-                visit[i] = True
-                backtracking(level+1, i, ndetect, newOffice)
-                visit[i] = False
+        if cctvNumber == 1:
+            detectOneCCTV(x, y, move, newOffice)
+        elif cctvNumber == 2:
+            detectTwoCCTV(x, y, move, newOffice)
+        elif cctvNumber == 3:
+            detectThreeCCTV(x, y, move, newOffice)
+        elif cctvNumber == 4:
+            detectFourCCTV(x, y, move, newOffice)
+        elif cctvNumber == 5:
+            detectFiveCCTV(x, y, move, newOffice)
+        
+        backtracking(index + 1, newOffice)
 
 startNode = 0
 visit = [False] * len(CCTV)
 visit[startNode] = True
 
-backtracking(1, startNode, 0, office)
-emptySpace = 0
-for i in range(N):
-    for j in range(M):
-        if office[i][j] == 0:
-            emptySpace+=1
-
-print(emptySpace - max(answerList))
-        
+answer = float('inf')
+backtracking(0, office)
+print(answer)
