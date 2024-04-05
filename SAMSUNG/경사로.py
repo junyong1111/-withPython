@@ -1,7 +1,9 @@
 import sys
+sys.setrecursionlimit(10**8)
 from collections import deque
 
 # sys.stdin = open("SAMSUNG/input.txt")
+
 
 def myprint(arr, n, m):
     for i in range(n):
@@ -13,6 +15,12 @@ def myprint(arr, n, m):
 input = sys.stdin.readline
 N, L = map(int, input().split())
 
+visit = [[False for _ in range(N)] for _ in range(N)]
+
+def initialize_visit():
+    for i in range(N):
+        for j in range(N):
+            visit[i][j] = False
 grid = []
 for _ in range(N):
     grid.append(list(map(int, input().split())))
@@ -195,7 +203,7 @@ def fromRighttoLeft(x, y, visit):
 answer = 0
 while queue:
     x, y, dir = queue.popleft()
-    visit = [[False for _ in range(N)] for _ in range(N)]
+    initialize_visit()
     
     
     if dir == "up":
