@@ -1,40 +1,26 @@
 import sys
-sys.stdin = open("input.txt")
+sys.stdin = open("BOJ/Class4/input.txt")
 
 N, M = map(int, input().split())
 
-def myprint(arr, n, m):
-    for i in range(n):
-        for j in range(m):
-            print(arr[i][j], end=" ")
-        print()
-    print("=== === ===")
+original = []
+for _ in range(N):
+    original.append(list(map(int, input().split())))
 
-def init(n):
-    arr = []
-    for _ in range(n):
-        arr.append(list(map(int, input().split())))
-    return arr
+#-- 2x2 구간합
+prefix = [0] * ((N*N)+1)
+start = 1
 
-def prefix(grid, n):
-    pre = [0]
-    iidx = 0
-    jidx = 0
-    for _ in range((n*n)):
-        # print("{} {} {}".format(iidx, iidx//(n), jidx%n))
-        pre.append(pre[iidx-1] + grid[iidx//n][jidx%n])
-        jidx+=1
-        iidx+=1
-    return pre
+for i in range(N):
+    for j in range(N):
+        prefix[start] = original[i][j] + prefix[start-1]
+        start+=1
 
-grid = init(N)
-#-- init
-
-#-- step1. 구간합 구하기
-pre = prefix(grid, N)
-# myprint(pre, N+1, N+1)
-
-print(pre)
-# for _ in range(M):
-#     y1, x1, y2, x2 = map(int, input().split())
-#     print(pre[(N*y2) + x2] - pre[(N*y1) + x1-1])
+for _ in range(M):
+    y1, x1, y2, x2 = map(int, input().split())
+    
+    right = ((y2 * N) - (N-1)) + (x2-1)
+    left = ((y1 * N) - (N-1)) + (x1-1) -1
+    print(prefix[right] - prefix[left])
+    
+#-- 이해를 잘못한듯 다시 도전 
