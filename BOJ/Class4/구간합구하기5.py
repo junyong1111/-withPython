@@ -1,21 +1,26 @@
 import sys
-# sys.stdin = open("input.txt")
-input = sys.stdin.readline
+sys.stdin = open("BOJ/Class4/input.txt")
 
 N, M = map(int, input().split())
-grid = []
 
+original = []
 for _ in range(N):
-    grid.append(list(map(int, input().split())))
-    
-prefix = [[0 for _ in range(N+1)] for _ in range(N+1)]
+    original.append(list(map(int, input().split())))
 
-for i in range(1, N+1):
-    for j in range(1, N+1):
-        #-- UP + LEFT + SELF - DUPLICATE(LEFT+UP)
-        prefix[i][j] = prefix[i-1][j] + prefix[i][j-1] + grid[i-1][j-1] - prefix[i-1][j-1]
-        
+#-- 2x2 구간합
+prefix = [0] * ((N*N)+1)
+start = 1
+
+for i in range(N):
+    for j in range(N):
+        prefix[start] = original[i][j] + prefix[start-1]
+        start+=1
+
 for _ in range(M):
-    sy, sx, ey, ex = map(int, input().split())
-    #-- 현재 2차원 구간합 => (LEFT + UP - LEFT+UP)
-    print(prefix[ey][ex] - (prefix[ey][sx-1] + prefix[sy-1][ex] - prefix[sy-1][sx-1]))
+    y1, x1, y2, x2 = map(int, input().split())
+    
+    right = ((y2 * N) - (N-1)) + (x2-1)
+    left = ((y1 * N) - (N-1)) + (x1-1) -1
+    print(prefix[right] - prefix[left])
+    
+#-- 이해를 잘못한듯 다시 도전 
