@@ -27,21 +27,25 @@ class Solution {
             }
         }
         
-        PriorityQueue<MyClass>pq = new PriorityQueue<>();
+        PriorityQueue<MyClass>pq = new PriorityQueue<>(Comparator.reverseOrder());
         
         dict.forEach((key, value) ->{
             pq.add(new MyClass(key, value));
         });
         // 사전을 순회하면서 해당 키값과 value값을 우선순위 큐에 저장
         
-        
-        while(pq.size()!=k){
+        int cnt = 0;
+        int answer = 0;
+        while(pq.size() !=0){
             MyClass myclass = pq.poll();
-            System.out.println(myclass.number + "   " + myclass.count);
+            cnt += myclass.count;
+            answer ++;
+            if(k <= cnt){
+                break;
+            }
+            // System.out.println(myclass.number + "   " + myclass.count);
         }
         
-        
-        int answer = 0;
         return answer;
     }
 }
