@@ -1,74 +1,68 @@
 import java.util.*;
 import java.io.*;
-public class AC{
-    public static void main(String[] args) throws Exception{
+public class AC {
+    public static void main(String[] args) throws Exception {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
-        String input[] = br.readLine().split(" ");
-        int testcase = Integer.parseInt(input[0]);
+        // 입력받는 부분 수정
+        int testcase = Integer.parseInt(br.readLine()); // 테스트 케이스 수 입력받기 수정
 
-        while(testcase !=0 ){
+        while (testcase != 0) {
             testcase--;
-            boolean flag = true; // true : front, false:back
-            String operation[] = br.readLine().split(" ");
-            input = br.readLine().split(" ");
-            int n = Integer.parseInt(input[0]);
+            boolean flag = true; // true : front, false: back
+            String operations = br.readLine(); // 연산자 입력받기 수정
+            int n = Integer.parseInt(br.readLine()); // 배열 크기 입력받기 수정
 
-            Deque<Integer>dq = new ArrayDeque<>();
-            input = br.readLine().split(" ");
-            for(int i=0; i<=n*2; i++){
-                if(i%2!=0){
-                    dq.add((input[0].charAt(i))-48);
+            Deque<Integer> dq = new ArrayDeque<>();
+            String arrayInput = br.readLine(); // 배열 입력받기 수정
+            arrayInput = arrayInput.substring(1, arrayInput.length() - 1); // '['와 ']' 제거
+            String[] elements = arrayInput.split(","); // ','를 기준으로 나누기 수정
+            for (String element : elements) {
+                if (!element.equals("")) { // 빈 문자열이 아닌 경우
+                    dq.add(Integer.parseInt(element)); // 숫자로 변환하여 덱에 추가
                 }
-                    
             }
+            
             boolean isDone = false;
-            for(int i=0; i<operation[0].length(); i++){
-                if(operation[0].charAt(i) == 'R'){
-                    flag = flag?false:true;
-                }else if(operation[0].charAt(i) == 'D'){
-                    if(dq.size() == 0){
+            for (char op : operations.toCharArray()) { // 연산자 하나씩 처리 (배열 순회 방식 변경)
+                if (op == 'R') {
+                    flag = !flag; // 뒤집기
+                } else if (op == 'D') {
+                    if (dq.isEmpty()) {
                         bw.write("error");
                         isDone = true;
                         bw.newLine();
                         break;
-                    }else{
-                        if(flag == true){
-                            dq.poll();
-                        }else{
-                            dq.pollLast();
+                    } else {
+                        if (flag) {
+                            dq.poll(); // 앞에서 제거
+                        } else {
+                            dq.pollLast(); // 뒤에서 제거
                         }
                     }
                 }
-            } // for
+            }
             
-            if(isDone == false){
-                if(dq.size() == 0){
+            if (!isDone) {
+                if (dq.isEmpty()) { // deque의 크기가 0인지 확인하는 조건 수정
                     bw.write("[]");
                     bw.newLine();
                     continue;
                 }
                 bw.write("[");
-                // System.out.print("[");
-                while (!dq.isEmpty()) {
-                    if(flag)
+                while (!dq.isEmpty()) { // deque를 출력하는 부분 수정
+                    if (flag)
                         bw.write(String.valueOf(dq.poll()));
-                        // System.out.print(dq.poll());
                     else
                         bw.write(String.valueOf(dq.pollLast()));
-                        // System.out.print(dq.pollLast());
-                    if(dq.size() !=0)
+                    if (!dq.isEmpty()) // deque의 크기가 0인지 확인하는 조건 수정
                         bw.write(",");
-                        // System.out.print(",");
                 }
                 bw.write("]");
                 bw.newLine();
-                
-                // System.out.println("]");
             }
-            
-        } //while
+        }
         bw.flush();
         bw.close();
     }
