@@ -1,6 +1,6 @@
 import java.util.*;
 import java.io.*;
-public class Main {
+public class 연구소 {
     public static  class Point{
         int x;
         int y;
